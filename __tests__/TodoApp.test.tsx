@@ -1,16 +1,16 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import { todoApi } from '../features/todos/TodoAPI';
-import todoSlice from '../features/todos/TodoSlice';
-import { TodoApp } from '../components/TodoApp';
+import { todoApi } from '../features/todos';
+import { todoSlice } from '../features/todos';
+import { TodoApp } from '../components/todos';
 import { describe, test, expect } from 'vitest';
 
 // Mock the API
 const mockStore = configureStore({
   reducer: {
     [todoApi.reducerPath]: todoApi.reducer,
-    todoUI: todoSlice,
+    todoUI: todoSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(todoApi.middleware),

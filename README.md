@@ -1,252 +1,112 @@
-# Todo App - TT Software Solution
+# Todo App (TT Software Solution)
 
-A modern todo application built with Next.js, featuring a comprehensive tech stack for development and testing.
+แอปพลิเคชัน Todo ที่ทันสมัยและครบทุกฟีเจอร์ สร้างด้วย Next.js, React, Redux Toolkit และ Tailwind CSS
 
-## 🌐 Live Demo
+## ภาพรวมของโปรเจกต์
 
-**Production:** [https://todo-app-tt-software-solution-5dud5mmyz-tofusannns-projects.vercel.app](https://todo-app-tt-software-solution-5dud5mmyz-tofusannns-projects.vercel.app)
+แอป Todo นี้ช่วยให้ผู้ใช้สามารถจัดการงานประจำวันได้อย่างมีประสิทธิภาพ มี UI ที่สะอาดตา รองรับการใช้งานบนมือถือและเดสก์ท็อป มีโหมดกลางคืน และอัปเดตข้อมูลแบบเรียลไทม์ผ่าน mock API ออกแบบมาเพื่อเพิ่มประสิทธิภาพและประสบการณ์ที่ดีสำหรับนักพัฒนา
 
-## 🚀 Tech Stack
+## ฟีเจอร์หลัก
 
-- **Framework:** Next.js 15 with App Router
-- **UI Components:** shadcn/ui + lucide-react
-- **State Management:** Redux Toolkit + RTK Query
-- **API Mocking:** MSW (Mock Service Worker)
-- **Testing:** Vitest + React Testing Library
-- **Deployment:** Vercel
-- **Styling:** Tailwind CSS
-- **Language:** TypeScript
+- เพิ่ม แก้ไข ทำเครื่องหมายเสร็จสิ้น และลบรายการงาน (Todo)
+- กรองงานตามสถานะ: ทั้งหมด, กำลังทำ, เสร็จสิ้น
+- ค้นหางานตามชื่อเรื่อง
+- รองรับการใช้งานบนมือถือและเดสก์ท็อป
+- สลับโหมดกลางวัน/กลางคืน
+- แสดงสถานะโหลดและข้อผิดพลาดขณะทำงานกับ API
+- ใช้ React สมัยใหม่ (hooks, functional components)
+- จัดการ state ด้วย Redux Toolkit และ RTK Query
+- ใช้ TypeScript เต็มรูปแบบ
+- มีการทดสอบด้วย Vitest และ Testing Library
 
-## 📁 Project Structure
+## เทคโนโลยีที่ใช้
 
-```
-todo-app-tt-software-solution/
-├── app/                   # App Router (Next.js)
-│   ├── layout.tsx
-│   ├── page.tsx          # Home page
-│   ├── providers.tsx     # Redux Provider
-│   └── globals.css
-├── components/
-│   └── UI/               # UI subcomponents (shadcn/ui)
-├── features/
-│   └── todos/
-│       ├── TodoSlice.ts  # Redux slice for UI state
-│       ├── TodoAPI.ts    # RTK Query endpoints
-│       └── types.ts      # TypeScript interfaces
-├── mocks/
-│   ├── handlers.ts       # MSW API handlers
-│   └── server.ts         # MSW server setup
-├── store/
-│   └── index.ts          # Redux store configuration
-├── src/
-│   └── test/
-│       ├── setup.ts      # Vitest setup
-│       └── test-utils.tsx # Custom render with Redux
-├── __tests__/            # Test files
-├── public/               # Static assets
-├── vercel.json           # Vercel deployment config
-└── package.json
-```
+- [Next.js 15](https://nextjs.org/) (App Router)
+- [React 19](https://react.dev/)
+- [Redux Toolkit](https://redux-toolkit.js.org/) & [RTK Query](https://redux-toolkit.js.org/rtk-query/overview)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/) สำหรับ UI components
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vitest](https://vitest.dev/) สำหรับการทดสอบ
 
-## 🛠️ Getting Started
+## เหตุผลของการเลือกใช้เทคโนโลยี
 
-### Prerequisites
+- **Next.js**: เลือกใช้เพราะเป็นเฟรมเวิร์กที่ทันสมัยสำหรับ React รองรับ SSR/SSG และ API Routes ทำให้พัฒนาแอปพลิเคชันที่มีประสิทธิภาพและขยายต่อได้ง่าย
+- **React**: เป็นไลบรารีที่ได้รับความนิยมสูง มี ecosystem ที่แข็งแกร่ง และเหมาะกับการสร้าง UI ที่ตอบสนองเร็ว
+- **Redux Toolkit & RTK Query**: ช่วยให้การจัดการ state และการดึงข้อมูล API มีความสะดวกและปลอดภัยจากข้อผิดพลาด ลด boilerplate code
+- **Tailwind CSS**: ทำให้การออกแบบ UI เร็วขึ้นและปรับแต่งได้ง่าย โดยไม่ต้องเขียน CSS เองมาก
+- **shadcn/ui**: เป็นชุด UI component ที่สวยงามและปรับแต่งได้ง่าย ช่วยให้พัฒนา UI ได้รวดเร็ว
+- **TypeScript**: เพิ่มความปลอดภัยในการเขียนโค้ด ลด bug และช่วยให้โค้ดอ่านง่ายขึ้น
+- **Vitest**: เป็น testing framework ที่เร็วและใช้งานง่าย เหมาะกับโปรเจกต์ React/TypeScript
 
-- Node.js 18+
-- npm or yarn
-- Git
+## เริ่มต้นใช้งาน
 
-### Installation
+### ข้อกำหนดเบื้องต้น
 
-1. Clone the repository:
+- Node.js (แนะนำ v18 ขึ้นไป)
+- npm (แนะนำ v9 ขึ้นไป)
 
-```bash
-git clone <repository-url>
-cd todo-app-tt-software-solution
-```
+### วิธีติดตั้ง
 
-2. Install dependencies:
+1. **โคลนโปรเจกต์:**
+   ```bash
+   git clone <repo-url>
+   cd todo-app-tt-software-solution
+   ```
+2. **ติดตั้ง dependencies:**
+   ```bash
+   npm install
+   ```
 
-```bash
-npm install
-```
+### การรันแอปพลิเคชัน
 
-3. Start the development server:
+- **โหมดพัฒนา:**
 
-```bash
-npm run dev
-```
+  ```bash
+  npm run dev
+  ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+  แอปจะใช้งานได้ที่ [http://localhost:3000](http://localhost:3000)
 
-## 🧪 Testing
+- **โหมด production:**
+  ```bash
+  npm run build
+  npm start
+  ```
 
-### Running Tests
+### การตรวจสอบคุณภาพโค้ด
 
 ```bash
-# Run tests in watch mode
+npm run lint
+```
+
+### การรันทดสอบ
+
+```bash
 npm test
+```
 
-# Run tests once
-npm run test:run
+หรือสำหรับ UI test runner:
 
-# Run tests with UI (if @vitest/ui is installed)
+```bash
 npm run test:ui
 ```
 
-### Test Structure
+## โครงสร้างโปรเจกต์
 
-- `src/test/setup.ts` - Test configuration and MSW setup
-- `src/test/test-utils.tsx` - Custom render function with Redux Provider
-- `__tests__/` - Test files
-- `mocks/` - MSW handlers for API mocking
+- `app/` - โฟลเดอร์หลักของ Next.js (routing, API, layout)
+- `components/` - คอมโพเนนต์ UI และฟีเจอร์ต่าง ๆ
+- `features/todos/` - Redux slice, API, และ types สำหรับ todo
+- `store/` - การตั้งค่า Redux store
+- `lib/` - ฟังก์ชันช่วยเหลือ (utility)
+- `__tests__/` - เทสต์แบบ unit และ integration
 
-### Test Coverage
+## API
 
-The project includes:
+แอปนี้ใช้ mock API route (`/api/todos`) สำหรับ CRUD โดยใช้ Next.js API routes ข้อมูลจะถูกเก็บไว้ในหน่วยความจำและรีเซ็ตเมื่อรีสตาร์ทเซิร์ฟเวอร์
 
-- ✅ Unit tests with Vitest
-- ✅ Integration tests with React Testing Library
-- ✅ API mocking with MSW
-- ✅ Redux state testing
-- ✅ Component testing utilities
+## การ Deploy ด้วย Vercel
 
-## 🏗️ Development
+โปรเจกต์นี้ถูก deploy และออนไลน์อยู่ที่ Vercel สามารถเข้าใช้งานแอป Todo ได้ที่ลิงก์นี้:
 
-### Available Scripts
-
-- `npm run dev` - Start development server with Turbopack
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
-- `npm test` - Run tests in watch mode
-- `npm run test:run` - Run tests once
-- `npm run test:ui` - Run tests with UI
-
-### State Management
-
-The app uses Redux Toolkit with RTK Query for state management:
-
-- **Store:** `store/index.ts` - Main Redux store configuration
-- **API:** `features/todos/TodoAPI.ts` - RTK Query endpoints (CRUD operations)
-- **UI State:** `features/todos/TodoSlice.ts` - Local UI state management
-- **Types:** `features/todos/types.ts` - TypeScript interfaces
-
-### API Mocking
-
-MSW is configured for development and testing:
-
-- **Handlers:** `mocks/handlers.ts` - Mock API endpoints
-- **Server:** `mocks/server.ts` - MSW server setup
-- **Development:** Auto-starts in development mode
-
-### Code Quality
-
-- ✅ ESLint configured and passing
-- ✅ TypeScript strict mode enabled
-- ✅ Prettier formatting
-- ✅ Import/export validation
-
-## 🚀 Deployment
-
-### Vercel Deployment
-
-#### Option 1: CLI Deployment
-
-```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy to production
-vercel --prod
-```
-
-#### Option 2: GitHub Integration
-
-1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Deploy automatically on push to main branch
-
-### Environment Variables
-
-Create a `.env.local` file for local development:
-
-```env
-NODE_ENV=development
-```
-
-### Build Configuration
-
-- **Framework:** Next.js 15
-- **Build Command:** `npm run build`
-- **Output Directory:** `.next`
-- **Node Version:** 18+
-
-## 📝 Features
-
-### Core Features
-
-- ✅ Modern UI with shadcn/ui components
-- ✅ Redux Toolkit for state management
-- ✅ RTK Query for data fetching and caching
-- ✅ MSW for API mocking in development and tests
-- ✅ Comprehensive testing setup with Vitest
-- ✅ TypeScript support with strict mode
-- ✅ Responsive design with Tailwind CSS
-- ✅ Vercel deployment ready
-
-### Development Features
-
-- ✅ Hot reload with Turbopack
-- ✅ ESLint code quality checks
-- ✅ TypeScript type checking
-- ✅ Test coverage reporting
-- ✅ API mocking for offline development
-
-### Production Features
-
-- ✅ Optimized builds
-- ✅ Static asset optimization
-- ✅ Server-side rendering
-- ✅ Automatic deployments
-- ✅ Performance monitoring
-
-## 🔧 Configuration Files
-
-- `vercel.json` - Vercel deployment configuration
-- `vitest.config.ts` - Vitest testing configuration
-- `next.config.ts` - Next.js configuration
-- `tsconfig.json` - TypeScript configuration
-- `tailwind.config.ts` - Tailwind CSS configuration
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Make your changes
-4. Add tests for new features
-5. Run tests (`npm test`)
-6. Run linting (`npm run lint`)
-7. Commit your changes (`git commit -m 'Add amazing feature'`)
-8. Push to the branch (`git push origin feature/amazing-feature`)
-9. Submit a pull request
-
-### Development Guidelines
-
-- Follow TypeScript best practices
-- Write tests for new features
-- Use conventional commit messages
-- Ensure ESLint passes before committing
-- Update documentation as needed
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 🆘 Support
-
-For support, please open an issue in the GitHub repository or contact the development team.
-
----
-
-**Built with ❤️ by TT Software Solution**
+[https://todo-app-tt-software-solution.vercel.app/](https://todo-app-tt-software-solution.vercel.app/)
