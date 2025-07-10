@@ -114,9 +114,11 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    font-family: 'Noto Sans', sans-serif;
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Noto Sans', sans-serif;
   }
 }
 
@@ -128,12 +130,12 @@
     @apply bg-cyan-100 text-cyan-700 dark:bg-cyan-900 dark:text-cyan-100;
   }
   .font-main {
-    font-family: 'Inter', 'Geist', 'Segoe UI', Arial, sans-serif;
+    font-family: 'Noto Sans', sans-serif;
     font-weight: 500;
     letter-spacing: 0.01em;
   }
   .font-title {
-    font-family: 'Inter', 'Geist', 'Segoe UI', Arial, sans-serif;
+    font-family: 'Noto Sans', sans-serif;
     font-weight: 700;
     letter-spacing: 0.01em;
   }
