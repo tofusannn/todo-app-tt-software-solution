@@ -119,3 +119,46 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .accent-cyan {
+    @apply bg-cyan-500 text-white dark:bg-cyan-400 dark:text-gray-900;
+  }
+  .accent-cyan-light {
+    @apply bg-cyan-100 text-cyan-700 dark:bg-cyan-900 dark:text-cyan-100;
+  }
+  .font-main {
+    font-family: 'Inter', 'Geist', 'Segoe UI', Arial, sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+  .font-title {
+    font-family: 'Inter', 'Geist', 'Segoe UI', Arial, sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  .shadow-card {
+    @apply shadow-lg dark:shadow-cyan-900/20;
+  }
+  .transition-main {
+    @apply transition-all duration-200 ease-in-out;
+  }
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-cyan-400 dark:focus:ring-cyan-600;
+  }
+  .rounded-xl-main {
+    @apply rounded-xl;
+  }
+  .rounded-2xl-main {
+    @apply rounded-2xl;
+  }
+  .text-xs-main {
+    @apply text-xs md:text-sm;
+  }
+  .text-base-main {
+    @apply text-base md:text-lg;
+  }
+  .text-lg-main {
+    @apply text-lg md:text-xl;
+  }
+}

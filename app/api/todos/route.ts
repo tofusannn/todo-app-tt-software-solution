@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-let todos = [
+const todos = [
   {
     id: '1',
     title: 'Learn Next.js',
