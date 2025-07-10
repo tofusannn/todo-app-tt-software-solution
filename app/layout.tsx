@@ -10,18 +10,13 @@ export const metadata: Metadata = {
   description: "A modern todo application built with Next.js",
 };
 
-// MSW setup for development
-if (process.env.NODE_ENV === 'development') {
-  import('../mocks/server').then(({ server }) => server.listen());
-}
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <Providers>
           {children}
