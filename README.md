@@ -1,36 +1,158 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Todo App - TT Software Solution
 
-## Getting Started
+A modern todo application built with Next.js, featuring a comprehensive tech stack for development and testing.
 
-First, run the development server:
+## 🚀 Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Framework:** Next.js 15 with App Router
+- **UI Components:** shadcn/ui + lucide-react
+- **State Management:** Redux Toolkit + RTK Query
+- **API Mocking:** MSW (Mock Service Worker)
+- **Testing:** Vitest + React Testing Library
+- **Deployment:** Vercel
+- **Styling:** Tailwind CSS
+
+## 📁 Project Structure
+
+```
+todo-app/
+├── app/                   # App Router (Next.js)
+│   ├── layout.tsx
+│   ├── page.tsx          # Home page
+│   └── todo/             # Nested route if needed
+├── components/
+│   ├── TodoItem.tsx
+│   ├── TodoForm.tsx
+│   └── UI/               # UI subcomponents (e.g. Modal, Button)
+├── features/
+│   └── todos/
+│       ├── TodoSlice.ts  # Redux slice
+│       ├── TodoAPI.ts    # RTK Query / Fetch logic
+│       └── types.ts
+├── mocks/
+│   ├── handlers.ts       # MSW handlers
+│   └── server.ts
+├── store/
+│   └── index.ts          # Redux store setup
+├── styles/
+│   └── globals.css
+├── public/
+├── README.md
+└── package.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Node.js 18+ 
+- npm or yarn
 
-## Learn More
+### Installation
 
-To learn more about Next.js, take a look at the following resources:
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd todo-app-tt-software-solution
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Start the development server:
+```bash
+npm run dev
+```
 
-## Deploy on Vercel
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🧪 Testing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Running Tests
+
+```bash
+# Run tests in watch mode
+npm test
+
+# Run tests once
+npm run test:run
+
+# Run tests with UI (if @vitest/ui is installed)
+npm run test:ui
+```
+
+### Test Structure
+
+- `src/test/setup.ts` - Test configuration and MSW setup
+- `src/test/test-utils.tsx` - Custom render function with Redux Provider
+- `__tests__/` - Test files
+- `mocks/` - MSW handlers for API mocking
+
+## 🏗️ Development
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm test` - Run tests
+- `npm run test:run` - Run tests once
+- `npm run test:ui` - Run tests with UI
+
+### State Management
+
+The app uses Redux Toolkit with RTK Query for state management:
+
+- **Store:** `store/index.ts`
+- **API:** `features/todos/TodoAPI.ts`
+- **UI State:** `features/todos/TodoSlice.ts`
+- **Types:** `features/todos/types.ts`
+
+### API Mocking
+
+MSW is configured for development and testing:
+
+- **Handlers:** `mocks/handlers.ts`
+- **Server:** `mocks/server.ts`
+
+## 🚀 Deployment
+
+### Vercel Deployment
+
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Deploy automatically on push to main branch
+
+### Environment Variables
+
+Create a `.env.local` file for local development:
+
+```env
+NODE_ENV=development
+```
+
+## 📝 Features
+
+- ✅ Modern UI with shadcn/ui components
+- ✅ Redux Toolkit for state management
+- ✅ RTK Query for data fetching
+- ✅ MSW for API mocking
+- ✅ Comprehensive testing setup
+- ✅ TypeScript support
+- ✅ Responsive design
+- ✅ Vercel deployment ready
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests for new features
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License.
