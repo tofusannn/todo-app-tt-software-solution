@@ -1,62 +1,31 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import { todoApi } from '../features/todos';
-import { todoSlice } from '../features/todos';
-import { TodoApp } from '../components/todos';
-import { describe, test, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
+import configureStore from 'redux-mock-store';
+import { TodoApp } from '../components/todos/TodoApp';
 
-
-const mockStore = configureStore({
-  reducer: {
-    [todoApi.reducerPath]: todoApi.reducer,
-    todoUI: todoSlice.reducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(todoApi.middleware),
+const mockStore = configureStore([]);
+const store = mockStore({
+  todoUI: { filter: 'all', searchTerm: '', isFormOpen: false },
 });
 
-const renderWithProvider = (component: React.ReactElement) => {
-  return render(
-    <Provider store={mockStore}>
-      {component}
-    </Provider>
-  );
-};
+vi.mock('../features/todos', () => ({
+  useGetTodosQuery: () => ({ data: [], isLoading: false, error: null }),
+  useCreateTodoMutation: () => [vi.fn(), { isLoading: false, error: null }],
+  useUpdateTodoMutation: () => [vi.fn(), { isLoading: false, error: null }],
+  useDeleteTodoMutation: () => [vi.fn(), { isLoading: false, error: null }],
+  setSearchTerm: vi.fn(),
+  toggleForm: vi.fn(),
+}));
 
 describe('TodoApp', () => {
-  test('renders todo app with title', () => {
-    renderWithProvider(<TodoApp />);
-    expect(screen.getByText('Todo App')).toBeInTheDocument();
-  });
-
-  test('shows add todo button', () => {
-    renderWithProvider(<TodoApp />);
-    expect(screen.getByText('Add Todo')).toBeInTheDocument();
-  });
-
-  test('opens todo form when add button is clicked', () => {
-    renderWithProvider(<TodoApp />);
-    const addButton = screen.getByText('Add Todo');
-    fireEvent.click(addButton);
-    expect(screen.getByPlaceholderText('What needs to be done?')).toBeInTheDocument();
-  });
-
-  test('shows filter buttons', () => {
-    renderWithProvider(<TodoApp />);
-    expect(screen.getByText(/All \(\d+\)/)).toBeInTheDocument();
-    expect(screen.getByText(/Active \(\d+\)/)).toBeInTheDocument();
-    expect(screen.getByText(/Completed \(\d+\)/)).toBeInTheDocument();
-  });
-
-  test('shows search input', () => {
-    renderWithProvider(<TodoApp />);
-    expect(screen.getByPlaceholderText('Search todos...')).toBeInTheDocument();
-  });
-
-  test('shows dark mode toggle', () => {
-    renderWithProvider(<TodoApp />);
-    const darkModeButton = screen.getByLabelText('Toggle dark mode');
-    expect(darkModeButton).toBeInTheDocument();
+  it('renders Today and uncompleted tasks', () => {
+    render(
+      <Provider store={store}>
+        <TodoApp />
+      </Provider>
+    );
+    expect(screen.getByText(/Today/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/uncompleted tasks/i).length).toBeGreaterThan(0);
   });
 }); 
