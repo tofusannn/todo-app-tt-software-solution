@@ -1,64 +1,93 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import { Label } from "@components/ui/label";
+import { Input } from "@components/ui/input";
+import { DatePicker } from "@components/common/DatePicker";
+import { Button } from "@components/ui/button";
 
 interface TodoFormProps {
-  onSubmit: (title: string) => void;
+  onSubmit: (title: string, date: string) => void;
   onCancel: () => void;
   placeholder?: string;
   initialValue?: string;
+  initialDate?: string;
   isEditing?: boolean;
 }
 
-export function TodoForm({ onSubmit, onCancel, placeholder = "What needs to be done?", initialValue = "", isEditing = false }: TodoFormProps) {
+export function TodoForm({
+  onSubmit,
+  onCancel,
+  placeholder = "What needs to be done?",
+  initialValue = "",
+  initialDate,
+  isEditing = false,
+}: TodoFormProps) {
   const [title, setTitle] = useState(initialValue);
+  const today = new Date();
+  const yyyyMM = today.toISOString().slice(0, 7);
+  const minDate = today.toISOString().slice(0, 10);
+  const maxDate =
+    yyyyMM +
+    "-" +
+    String(
+      new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate()
+    ).padStart(2, "0");
+  const [date, setDate] = useState(initialDate || minDate);
 
   useEffect(() => {
     setTitle(initialValue);
-  }, [initialValue]);
+    if (initialDate) setDate(initialDate);
+  }, [initialValue, initialDate]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const trimmedTitle = title.trim();
     if (trimmedTitle) {
-      onSubmit(trimmedTitle);
-      setTitle('');
+      onSubmit(trimmedTitle, date);
+      setTitle("");
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Escape') {
+    if (e.key === "Escape") {
       onCancel();
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-2">
-      <div className="flex gap-2 items-center">
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder={placeholder}
-          className="flex-1 px-4 py-3 rounded-xl-main border-0 shadow-card bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white focus-ring text-base-main font-main transition-main"
-          autoFocus
+    <form onSubmit={handleSubmit}>
+      <div className="flex flex-col gap-3">
+        <div className="grid w-full items-center gap-3">
+          <Label htmlFor="todo-title" className="px-1">
+            Title
+          </Label>
+          <Input
+            id="todo-title"
+            type="text"
+            value={title}
+            autoFocus
+            placeholder={placeholder}
+            onChange={(e) => setTitle(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+        </div>
+        <DatePicker
+          title="Date"
+          value={date}
+          onChange={setDate}
+          min={minDate}
+          max={maxDate}
         />
-        <button
-          type="submit"
-          disabled={!title.trim()}
-          className="accent-cyan rounded-full w-12 h-12 flex items-center justify-center shadow-card disabled:opacity-50 disabled:cursor-not-allowed transition-main text-lg font-title focus-ring"
-        >
-          {isEditing ? '✓' : '+'}
-        </button>
-        <button
-          type="button"
-          onClick={onCancel}
-          className="bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-full w-12 h-12 flex items-center justify-center shadow-card transition-main text-lg font-title focus-ring"
-        >
-          ×
-        </button>
+        <div className="flex justify-end gap-3">
+          <Button type="button" variant="outline" onClick={onCancel}>
+            Cancel
+          </Button>
+          <Button type="submit" disabled={!title.trim()}>
+            Submit
+          </Button>
+        </div>
       </div>
     </form>
   );
-} 
+}

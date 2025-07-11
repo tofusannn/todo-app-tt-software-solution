@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Todo, CreateTodoRequest, UpdateTodoRequest, DeleteTodoRequest } from './types';
+import { Todo, CreateTodoRequest, UpdateTodoRequest, DeleteTodoRequest } from '@features/todos';
 
 const isTest = typeof process !== 'undefined' && process.env.NODE_ENV === 'test';
 
@@ -8,8 +8,8 @@ export const todoApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: isTest ? 'http://localhost/api/todos' : '/api/todos' }),
   tagTypes: ['Todo'],
   endpoints: (builder) => ({
-    getTodos: builder.query<Todo[], void>({
-      query: () => '',
+    getTodos: builder.query<Todo[], { date?: string }>({
+      query: (arg) => arg && arg.date ? `?date=${arg.date}` : '',
       providesTags: ['Todo'],
     }),
     createTodo: builder.mutation<Todo, CreateTodoRequest>({

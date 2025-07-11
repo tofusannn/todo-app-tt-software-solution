@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { store } from '../../store';
+import { store } from '@store/index';
 
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   return (

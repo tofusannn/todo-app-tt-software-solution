@@ -1,16 +1,26 @@
 "use client";
 
 import { useState } from "react";
-import { Todo } from "../../features/todos";
-import { TodoForm } from "./TodoForm";
-import { Card } from "../ui/card";
-import { CheckCircle2, Circle, Pencil, Trash2 } from "lucide-react";
-import { Badge } from "../ui/badge";
+import { Todo } from "@features/todos";
+import { TodoForm } from "@components/todos/TodoForm";
+import { Card } from "@components/ui/card";
+import { Circle, Pencil, Trash2 } from "lucide-react";
+import { format } from "date-fns";
+import { Button } from "@components/ui/button";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@components/ui/dialog";
 
 interface TodoItemProps {
   todo: Todo;
   onToggle: (id: string, completed: boolean) => void;
-  onUpdate: (id: string, title: string) => void;
+  onUpdate: (id: string, title: string, date: string) => void;
+  onEdit: () => void;
   onDelete: (id: string) => void;
 }
 
@@ -18,86 +28,104 @@ export function TodoItem({
   todo,
   onToggle,
   onUpdate,
+  onEdit,
   onDelete,
 }: TodoItemProps) {
-  const [isEditing, setIsEditing] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const handleToggle = () => {
     onToggle(todo.id, !todo.completed);
   };
 
-  const handleUpdate = (title: string) => {
-    onUpdate(todo.id, title);
-    setIsEditing(false);
+  const handleUpdate = (title: string, date: string) => {
+    onUpdate(todo.id, title, date);
+    onEdit();
   };
 
   const handleDelete = () => {
-    onDelete(todo.id);
+    setShowDeleteDialog(true);
   };
 
   const handleDoubleClick = () => {
-    setIsEditing(true);
+    onEdit();
   };
 
-  if (isEditing) {
-    return (
-      <TodoForm
-        onSubmit={handleUpdate}
-        onCancel={() => setIsEditing(false)}
-        initialValue={todo.title}
-        isEditing={true}
-      />
-    );
-  }
-
   return (
-    <Card className={`flex items-center gap-3 p-4 rounded-xl-main shadow-card bg-white/90 dark:bg-gray-800/90 transition-main border-0 ${todo.completed ? 'opacity-60' : ''}`}>
-      {/* Checkbox */}
-      <button
+    <Card
+      className={`flex flex-row items-center gap-3 p-4 rounded-xl-main  bg-white/90 dark:bg-gray-800/90 border dark:border-[#4eb7a0] `}
+    >
+      <Button
         onClick={handleToggle}
-        className={`flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-main focus-ring ${todo.completed ? 'border-cyan-500 bg-cyan-500' : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700'}`}
+        disabled={todo.completed}
+        variant="ghost"
+        size="icon"
+        className={`flex w-3 h-3 items-center cursor-pointer ${
+          todo.completed ? "bg-[#4eb7a0]" : ""
+        } rounded-full`}
         aria-label={todo.completed ? "Mark as incomplete" : "Mark as complete"}
       >
-        {todo.completed ? (
-          <CheckCircle2 className="w-6 h-6 text-white" />
-        ) : (
-          <Circle className="w-6 h-6 text-gray-300 dark:text-gray-500" />
-        )}
-      </button>
+        <Circle className="w-3 h-3 text-[#4eb7a0]" />
+      </Button>
 
-      {/* Main content */}
       <div className="flex-1 flex flex-col gap-1 min-w-0">
-        <span
-          onDoubleClick={handleDoubleClick}
-          className={`truncate text-base-main font-title transition-main ${
-            todo.completed
-              ? "line-through text-gray-400 dark:text-gray-500"
-              : "text-gray-900 dark:text-white"
-          }`}
-        >
+        <span className={`text-base font-medium text-gray-900 dark:text-white`}>
           {todo.title}
         </span>
-        {/* Optional: show time or tag here if available */}
-        <span className="text-xs-main text-gray-400 font-main transition-main">11:00 - 12:00</span>
       </div>
 
-      {/* Actions */}
-      <div className="flex items-center gap-2">
-        <button
-          onClick={handleDoubleClick}
-          className="p-1 accent-cyan rounded-full shadow-card transition-main focus-ring"
-          aria-label="Edit todo"
-        >
-          <Pencil className="w-5 h-5" />
-        </button>
-        <button
-          onClick={handleDelete}
-          className="p-1 bg-gray-200 dark:bg-gray-700 text-gray-400 hover:text-red-500 rounded-full shadow-card transition-main focus-ring"
-          aria-label="Delete todo"
-        >
-          <Trash2 className="w-5 h-5" />
-        </button>
-      </div>
+      {!todo.completed ? (
+        <div className="flex items-center gap-2">
+          <Button
+            onClick={handleDoubleClick}
+            className="p-2 rounded-full bg-[#3ca5c0]"
+            aria-label="Edit todo"
+            variant="ghost"
+            size="icon"
+          >
+            <Pencil className="w-4 h-4 text-white" />
+          </Button>
+          <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+            <DialogTrigger asChild>
+              <Button
+                onClick={handleDelete}
+                className="p-2 rounded-full bg-red-500"
+                aria-label="Delete todo"
+                variant="ghost"
+                size="icon"
+              >
+                <Trash2 className="w-4 h-4 text-white" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Delete this task?</DialogTitle>
+              </DialogHeader>
+              <div>Are you sure you want to delete "{todo.title}"?</div>
+              <DialogFooter>
+                <Button
+                  variant="outline"
+                  onClick={() => setShowDeleteDialog(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="destructive"
+                  onClick={() => {
+                    setShowDeleteDialog(false);
+                    onDelete(todo.id);
+                  }}
+                >
+                  Delete
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
+      ) : (
+        <div className="flex items-center gap-2 text-xs text-gray-400 font-main">
+          {format(new Date(todo.date), "MMM d")}
+        </div>
+      )}
     </Card>
   );
 }

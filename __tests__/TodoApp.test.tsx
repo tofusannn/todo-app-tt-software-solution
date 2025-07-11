@@ -6,7 +6,7 @@ import { todoSlice } from '../features/todos';
 import { TodoApp } from '../components/todos';
 import { describe, test, expect } from 'vitest';
 
-// Mock the API
+
 const mockStore = configureStore({
   reducer: {
     [todoApi.reducerPath]: todoApi.reducer,
