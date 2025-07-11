@@ -12,7 +12,6 @@ interface TodoFormProps {
   placeholder?: string;
   initialValue?: string;
   initialDate?: string;
-  isEditing?: boolean;
 }
 
 export function TodoForm({
@@ -21,7 +20,6 @@ export function TodoForm({
   placeholder = "What needs to be done?",
   initialValue = "",
   initialDate,
-  isEditing = false,
 }: TodoFormProps) {
   const [title, setTitle] = useState(initialValue);
   const today = new Date();

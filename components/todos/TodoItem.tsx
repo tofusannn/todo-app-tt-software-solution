@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Todo } from "@features/todos";
-import { TodoForm } from "@components/todos/TodoForm";
 import { Card } from "@components/ui/card";
 import { Circle, Pencil, Trash2 } from "lucide-react";
 import { format } from "date-fns";
@@ -19,7 +18,6 @@ import {
 interface TodoItemProps {
   todo: Todo;
   onToggle: (id: string, completed: boolean) => void;
-  onUpdate: (id: string, title: string, date: string) => void;
   onEdit: () => void;
   onDelete: (id: string) => void;
 }
@@ -27,7 +25,6 @@ interface TodoItemProps {
 export function TodoItem({
   todo,
   onToggle,
-  onUpdate,
   onEdit,
   onDelete,
 }: TodoItemProps) {
@@ -35,11 +32,6 @@ export function TodoItem({
 
   const handleToggle = () => {
     onToggle(todo.id, !todo.completed);
-  };
-
-  const handleUpdate = (title: string, date: string) => {
-    onUpdate(todo.id, title, date);
-    onEdit();
   };
 
   const handleDelete = () => {
@@ -100,7 +92,7 @@ export function TodoItem({
               <DialogHeader>
                 <DialogTitle>Delete this task?</DialogTitle>
               </DialogHeader>
-              <div>Are you sure you want to delete "{todo.title}"?</div>
+              <div>Are you sure you want to delete &quot;{todo.title}&quot;?</div>
               <DialogFooter>
                 <Button
                   variant="outline"

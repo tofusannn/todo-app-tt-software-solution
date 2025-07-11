@@ -33,6 +33,8 @@ export function TodoApp() {
     (state: RootState) => state.todoUI
   );
 
+  const isMobile = useIsMobile();
+
   const today = new Date();
   const days = Array.from({ length: 5 }).map((_, i) => {
     const date = addDays(today, i);
@@ -47,7 +49,7 @@ export function TodoApp() {
   const [selectedTab, setSelectedTab] = useState(days[0].key);
   const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
 
-  const { data: todos = [], isLoading, error } = useGetTodosQuery({});
+  const { data: todos = [] } = useGetTodosQuery({});
 
   const searchedTodos = (todos as Todo[]).filter((todo) =>
     todo.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -79,19 +81,6 @@ export function TodoApp() {
     useUpdateTodoMutation();
   const [deleteTodo, { isLoading: isDeleting, error: deleteError }] =
     useDeleteTodoMutation();
-
-  const filteredTodos = todos.filter((todo) => {
-    const matchesFilter =
-      filter === "all" ||
-      (filter === "active" && !todo.completed) ||
-      (filter === "completed" && todo.completed);
-
-    const matchesSearch = todo.title
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-
-    return matchesFilter && matchesSearch;
-  });
 
   const handleCreateTodo = async (title: string, date: string) => {
     try {
@@ -131,8 +120,6 @@ export function TodoApp() {
       <ErrorBanner message="An error occurred while saving. Please try again." />
     );
   }
-
-  const isMobile = useIsMobile();
 
   return (
     <div
@@ -225,7 +212,6 @@ export function TodoApp() {
                             key={todo.id}
                             todo={todo}
                             onToggle={handleToggleTodo}
-                            onUpdate={handleUpdateTodo}
                             onEdit={() => setEditingTodo(todo)}
                             onDelete={handleDeleteTodo}
                           />
@@ -269,7 +255,6 @@ export function TodoApp() {
                             key={todo.id}
                             todo={todo}
                             onToggle={handleToggleTodo}
-                            onUpdate={handleUpdateTodo}
                             onEdit={() => setEditingTodo(todo)}
                             onDelete={handleDeleteTodo}
                           />
@@ -342,7 +327,6 @@ export function TodoApp() {
                               key={todo.id}
                               todo={todo}
                               onToggle={handleToggleTodo}
-                              onUpdate={handleUpdateTodo}
                               onEdit={() => setEditingTodo(todo)}
                               onDelete={handleDeleteTodo}
                             />
@@ -423,7 +407,6 @@ export function TodoApp() {
                               key={todo.id}
                               todo={todo}
                               onToggle={handleToggleTodo}
-                              onUpdate={handleUpdateTodo}
                               onEdit={() => setEditingTodo(todo)}
                               onDelete={handleDeleteTodo}
                             />
@@ -475,7 +458,6 @@ export function TodoApp() {
               onCancel={() => setEditingTodo(null)}
               initialValue={editingTodo.title}
               initialDate={editingTodo.date}
-              isEditing={true}
             />
           </div>
         </div>
