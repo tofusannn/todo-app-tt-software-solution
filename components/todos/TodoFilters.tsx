@@ -1,7 +1,6 @@
 "use client";
 
 interface TodoFiltersProps {
-  filter: "all" | "active" | "completed";
   searchTerm: string;
   onSearchChange: (term: string) => void;
   todoCount: number;
@@ -9,7 +8,6 @@ interface TodoFiltersProps {
 }
 
 export function TodoFilters({
-  filter,
   searchTerm,
   onSearchChange,
   todoCount,
@@ -40,7 +38,7 @@ export function TodoFilters({
         </svg>
       </div>
 
-      {(searchTerm || filter !== "all") && (
+      {searchTerm && (
         <div className="text-xs-main text-[#198b76] text-center font-main">
           Showing {todoCount} of {totalCount} todos
         </div>

@@ -14,7 +14,6 @@ describe('TodoItem', () => {
       <TodoItem
         todo={todo}
         onToggle={onToggle}
-        onUpdate={onUpdate}
         onEdit={onEdit}
         onDelete={onDelete}
       />
@@ -27,7 +26,6 @@ describe('TodoItem', () => {
       <TodoItem
         todo={todo}
         onToggle={onToggle}
-        onUpdate={onUpdate}
         onEdit={onEdit}
         onDelete={onDelete}
       />

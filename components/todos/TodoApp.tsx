@@ -29,7 +29,7 @@ import { useIsMobile } from "@/lib/useIsMobile";
 
 export function TodoApp() {
   const dispatch = useDispatch();
-  const { filter, searchTerm, isFormOpen } = useSelector(
+  const { searchTerm, isFormOpen } = useSelector(
     (state: RootState) => state.todoUI
   );
 
@@ -176,7 +176,6 @@ export function TodoApp() {
                   </TabsList>
                 </Tabs>
                 <TodoFilters
-                  filter={filter}
                   searchTerm={searchTerm}
                   onSearchChange={(term: string) =>
                     dispatch(setSearchTerm(term))
@@ -365,7 +364,6 @@ export function TodoApp() {
                     </TabsList>
                   </Tabs>
                   <TodoFilters
-                    filter={filter}
                     searchTerm={searchTerm}
                     onSearchChange={(term: string) =>
                       dispatch(setSearchTerm(term))
