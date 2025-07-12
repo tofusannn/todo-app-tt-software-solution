@@ -13,10 +13,6 @@
 - รองรับการใช้งานบนมือถือและเดสก์ท็อป
 - สลับโหมดกลางวัน/กลางคืน
 - แสดงสถานะโหลดและข้อผิดพลาดขณะทำงานกับ API
-- ใช้ React สมัยใหม่ (hooks, functional components)
-- จัดการ state ด้วย Redux Toolkit และ RTK Query
-- ใช้ TypeScript เต็มรูปแบบ
-- มีการทดสอบด้วย Vitest และ Testing Library
 
 ## เทคโนโลยีที่ใช้
 
