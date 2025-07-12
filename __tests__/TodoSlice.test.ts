@@ -1,4 +1,4 @@
-import reducer, { setSelectedTodo, toggleForm, setFilter, setSearchTerm } from '../features/todos/TodoSlice';
+import reducer, { setSelectedTodo, toggleForm, setSearchTerm } from '../features/todos/TodoSlice';
 import { describe, it, expect } from 'vitest';
 
 describe('todoSlice reducer', () => {
@@ -6,7 +6,6 @@ describe('todoSlice reducer', () => {
     expect(reducer(undefined, { type: '' })).toEqual({
       selectedTodoId: null,
       isFormOpen: false,
-      filter: 'all',
       searchTerm: '',
     });
   });
@@ -19,11 +18,6 @@ describe('todoSlice reducer', () => {
   it('should handle toggleForm', () => {
     const state = reducer(undefined, toggleForm());
     expect(state.isFormOpen).toBe(true);
-  });
-
-  it('should handle setFilter', () => {
-    const state = reducer(undefined, setFilter('completed'));
-    expect(state.filter).toBe('completed');
   });
 
   it('should handle setSearchTerm', () => {
