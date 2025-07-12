@@ -51,22 +51,26 @@ export function TodoApp() {
 
   const { data: todos = [] } = useGetTodosQuery({});
 
-  const searchedTodos = (todos as Todo[]).filter((todo) =>
-    todo.title.toLowerCase().includes(searchTerm.toLowerCase())
+  // Filter todos for the selected date first
+  const selectedDateTodos = (todos as Todo[]).filter(
+    (todo) => todo.date === selectedTab
   );
 
-  const uncompletedTodos = searchedTodos.filter(
-    (todo) => !todo.completed && todo.date === selectedTab
+  // Apply search only to uncompleted todos for the selected date
+  const uncompletedTodos = selectedDateTodos.filter(
+    (todo) => !todo.completed && todo.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const completedTodos = searchedTodos.filter((todo) => todo.completed);
+  // Completed todos remain unfiltered by search
+  const completedTodos = (todos as Todo[]).filter((todo) => todo.completed);
 
   const todayStr = format(today, "yyyy-MM-dd");
-  const activeCount = searchedTodos.filter(
+  // activeCount and percent calculations remain unaffected by search
+  const activeCount = (todos as Todo[]).filter(
     (todo) => !todo.completed && todo.date === todayStr
   ).length;
   // Calculate percent for today only
-  const todayTodos = searchedTodos.filter((todo) => todo.date === todayStr);
+  const todayTodos = (todos as Todo[]).filter((todo) => todo.date === todayStr);
   const todayCompletedCount = todayTodos.filter(
     (todo) => todo.completed
   ).length;
